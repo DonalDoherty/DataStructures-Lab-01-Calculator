@@ -1,5 +1,4 @@
-import java.util.Stack;
-
+import Stack.MyStack;
 /**
  * The main part of the calculator doing the calculations.
  * 
@@ -8,7 +7,8 @@ import java.util.Stack;
  */
 public class CalcEngine
 {
-	Stack opStack;
+	MyStack opStack;
+	MyStack output;
     char operator;
     int displayValue, operand1;
 
@@ -40,7 +40,12 @@ public class CalcEngine
     {
         displayValue = displayValue *10 + number;
     }
-
+    
+    //This method converts the infix input to postfix.
+    public void toPostFix()
+    {
+    	
+    }
     /**
      * The 'plus' button was pressed. 
      */
