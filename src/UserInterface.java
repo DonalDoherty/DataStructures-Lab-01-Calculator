@@ -128,6 +128,8 @@ public class UserInterface
 			calc.multiply();
 		else if(command.equals("/"))
 			calc.divide();
+		else if(command.equals("^"))
+			calc.power();
 
 		redisplay();
 	}

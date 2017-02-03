@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * The main part of the calculator doing the calculations.
  * 
@@ -6,6 +8,7 @@
  */
 public class CalcEngine
 {
+	Stack opStack;
     char operator;
     int displayValue, operand1;
 
@@ -131,5 +134,32 @@ public void divide()
     {
         return("Ver. 1.0");
     }
+
+	public void power() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	//Compares Operator to priorities 
+	public int priority(char ch)
+	{
+		if (ch == '+') {
+			return 0;
+		}
+	    else if (ch == '-') {
+			return 0;
+		}
+		else if (ch == '/') {
+			return 1;
+		}
+		else if (ch == '*') {
+			return 1;
+		}
+		else if (ch == '^') {
+			return 2;
+		}
+		return 0;
+	}
 
 }
