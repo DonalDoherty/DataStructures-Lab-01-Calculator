@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import Stack.MyStack;
 /**
  * The main part of the calculator doing the calculations.
@@ -8,6 +10,7 @@ import Stack.MyStack;
 public class CalcEngine
 {
 	MyStack opStack;
+	ArrayList<String> tokens;
 	MyStack output;
     char operator;
     int displayValue, operand1;
@@ -21,6 +24,9 @@ public class CalcEngine
         operator =' ';
         displayValue=0;
 		operand1 = 0;
+		tokens = new ArrayList<String>();
+		output = new MyStack<String>();
+		opStack = new MyStack<String>();
     }
 
     /**
@@ -42,7 +48,7 @@ public class CalcEngine
     }
     
     //This method converts the infix input to postfix.
-    public void toPostFix()
+    public void postFix()
     {
     	
     }
