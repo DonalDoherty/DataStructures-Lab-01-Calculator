@@ -5,7 +5,7 @@ import java.util.*;
 public class MyStack<E> implements StackInterface< E > {
 	
 	//The ArrayList that will form the basis of the stack
-	public ArrayList<E> content;
+	private ArrayList<E> content;
 	
 	public MyStack()
 	{

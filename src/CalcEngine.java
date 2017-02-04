@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.lang.Object;
 import Stack.MyStack;
 /**
  * The main part of the calculator doing the calculations.
@@ -9,9 +10,10 @@ import Stack.MyStack;
  */
 public class CalcEngine
 {
-	MyStack opStack;
+	MyStack<String> opStack;
 	String[] tokens;
-	MyStack output;
+	MyStack<String> output;
+	MyStack<Integer> answer;
     char operator;
     int displayValue, operand1;
 
@@ -26,6 +28,7 @@ public class CalcEngine
 		operand1 = 0;
 		output = new MyStack<String>();
 		opStack = new MyStack<String>();
+		answer = new MyStack<Integer>();
     }
 
     /**
@@ -47,7 +50,7 @@ public class CalcEngine
     }
     
     //This method converts the infix input to postfix.
-    public String postFix(String in)
+    public int postFix(String in)
     {
     	//This line uses a postive lookbehind and lookahead to split the infix string into tokens, allowing for more than 1 didgit numbers
     	tokens = in.split("(?<=[^\\.a-zA-Z\\d])|(?=[^\\.a-zA-Z\\d])");
@@ -70,10 +73,6 @@ public class CalcEngine
     						output.push(tokens[j]);
     					}
     				}
-    				for(int k = 0; opStack.peek() == "("; k++)
-    				{
-    					output.push(opStack.pop());
-    				}
 					output.push(opStack.pop());	
     			}
     			else if(opStack.isEmpty() == true  || priority(token) > priority((String) opStack.peek()))
@@ -90,11 +89,70 @@ public class CalcEngine
     			}
     		}
     	}
-    	output.push(opStack.pop());
-    	System.out.println(opStack.content.toString());
-    	System.out.println(output.content.toString());
-    	return null;
+    	//this while loop ensures that no operators are left in the opstack
+    	while(opStack.isEmpty() == false)
+        	output.push(opStack.pop());	
+    	//This creates a new arrayList of string to hold the data from the output stack
+    	ArrayList<String> postTokens = new ArrayList<String>();
+    	while(output.isEmpty() == false)
+    		postTokens.add(output.pop());
+    	//reverses the arrayList so the postfix expression is in the right order
+    	Collections.reverse(postTokens);
+    	//the result of the expression is calculated with the answer(); formula
+    	int result = answer(postTokens);
+    	return result;
     }
+    
+    //This method uses a simple algorithm to produce the answer for the expression
+    public int answer(ArrayList<String> postTokens)
+    {
+    	for(int i = 0; i<postTokens.size(); i++)
+    	{
+    		if (priority(postTokens.get(i)) == 0)
+    		{
+    			answer.push(Integer.parseInt(postTokens.get(i)));
+    		}
+    		if (postTokens.get(i).equals("^"))
+    		{
+    			int b = answer.pop();
+    			int a = answer.pop();
+				int power = a;
+    			while (i < b)
+    				i++;
+    				power = power*a;
+    			answer.push(power);
+    		}
+    		if (postTokens.get(i).equals("*"))
+    		{
+    			int b = answer.pop();
+    			int a = answer.pop();
+    			answer.push(a*b);
+    		}
+    		if (postTokens.get(i).equals("/"))
+    		{
+    			int b = answer.pop();
+    			int a = answer.pop();
+    			answer.push(a/b);
+    		}
+    		if (postTokens.get(i).equals("+"))
+    		{
+    			int b = answer.pop();
+    			int a = answer.pop();
+    			answer.push(a+b);
+    		}
+
+    		if (postTokens.get(i).equals("-"))
+    		{
+    			int b = answer.pop();
+    			int a = answer.pop();
+    			answer.push(a-b);
+    		}
+
+    		
+    	}
+    	return answer.pop();
+    }
+    
     
 
     /**

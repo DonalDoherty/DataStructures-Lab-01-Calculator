@@ -110,7 +110,7 @@ public class UserInterface
 		}
 		
 		else if(command.equals("="))
-			calc.postFix(in);
+			in = Integer.toString(calc.postFix(in));
 		else if(command.equals("C"))
 			in = "";
 			command = "";
