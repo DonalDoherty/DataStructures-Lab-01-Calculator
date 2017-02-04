@@ -125,7 +125,6 @@ public class UserInterface
 	 */
 	private void redisplay()
 	{
-		display.setText("" + calc.getDisplayValue());
 		display.setText(in);
 	}
 

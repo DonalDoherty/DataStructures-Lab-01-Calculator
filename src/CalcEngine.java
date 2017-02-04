@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.lang.Object;
 import Stack.MyStack;
 /**
  * The main part of the calculator doing the calculations.
@@ -14,8 +13,6 @@ public class CalcEngine
 	String[] tokens;
 	MyStack<String> output;
 	MyStack<Integer> answer;
-    char operator;
-    int displayValue, operand1;
 
     /**
      * Create a CalcEngine instance. Initialise its state so that it is ready 
@@ -23,32 +20,11 @@ public class CalcEngine
      */
     public CalcEngine()
     {
-        operator =' ';
-        displayValue=0;
-		operand1 = 0;
 		output = new MyStack<String>();
 		opStack = new MyStack<String>();
 		answer = new MyStack<Integer>();
     }
 
-    /**
-     * Return the value that should currently be displayed on the calculator
-     * display.
-     */
-    public int getDisplayValue()
-    {
-        return(displayValue);
-    }
-
-    /**
-     * A number button was pressed. Do whatever you have to do to handle it.
-     * The number value of the button is given as a parameter.
-     */
-    public void numberPressed(int number)
-    {
-        displayValue = displayValue *10 + number;
-    }
-    
     //This method converts the infix input to postfix.
     public int postFix(String in)
     {
@@ -153,66 +129,6 @@ public class CalcEngine
     	return answer.pop();
     }
     
-    
-
-    /**
-     * The 'plus' button was pressed. 
-     */
-    public void plus()
-    {
-       operand1 = displayValue;
-	   displayValue = 0;
-       operator = '+';
-    }
-    
-    /**
-     * The 'minus' button was pressed.
-     */
-    public void minus()
-    {
-        operand1 = displayValue;
-	   displayValue = 0;
-       operator = '-'; 
-    }
-
-public void multiply()
-    {
-        operand1 = displayValue;
-	   displayValue = 0;
-       operator = '*'; 
-    }
-
-public void divide()
-    {
-        operand1 = displayValue;
-	   displayValue = 0;
-       operator = '/'; 
-    }
-
-    /**
-     * The '=' button was pressed.
-     */
-    public void equals()
-    {
-        if (operator == '+') {
-			displayValue += operand1;
-			operand1 = 0;
-		}
-	    else if (operator == '-') {
-			displayValue = operand1-displayValue;
-			operand1 = 0;
-		}
-		else if (operator == '*') {
-			displayValue = operand1*displayValue;
-			operand1 = 0;
-		}
-		else if (operator == '/') {
-			displayValue = operand1/displayValue;
-			operand1 = 0;
-		}
-
-    }
-
     /**
      * The 'C' (clear) button was pressed.
      */
@@ -236,7 +152,7 @@ public void divide()
      */
     public String getAuthor()
     {
-        return("Joe Daly");
+        return("Donal Doherty");
     }
 
     /**
@@ -245,14 +161,8 @@ public void divide()
      */
     public String getVersion()
     {
-        return("Ver. 1.0");
+        return("Ver. 1.5");
     }
-
-	public void power() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
 	
 	//Compares Operator to priorities 
 	public int priority(String ch)
