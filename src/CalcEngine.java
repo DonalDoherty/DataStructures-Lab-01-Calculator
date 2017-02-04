@@ -78,17 +78,21 @@ public class CalcEngine
     				}
 					output.push(opStack.pop());	
     			}
-    			else if(priority(token) > priority((String) opStack.peek()) || opStack.isEmpty() == true )
+    			else if(opStack.isEmpty() == true  || priority(token) > priority((String) opStack.peek()))
     					{
     					opStack.push(token);
     					}
     			else
     			{
     				while(opStack.isEmpty() == false)
-    				output.push(opStack.pop());
+    				{
+        				output.push(opStack.pop());
+    				}
+    				opStack.push(token);
     			}
     		}
     	}
+    	output.push(opStack.pop());
     	return null;
     }
     
@@ -196,22 +200,22 @@ public void divide()
 	//Compares Operator to priorities 
 	public int priority(String ch)
 	{
-		if (ch == "+") {
+		if (ch.equals("+")) {
 			return 1;
 		}
-	    else if (ch == "-") {
+	    else if (ch.equals("-")) {
 			return 1;
 		}
-		else if (ch == "/") {
+		else if (ch.equals("/")) {
 			return 2;
 		}
-		else if (ch == "*") {
+		else if (ch.equals("*")) {
 			return 2;
 		}
-		else if (ch == "^") {
+		else if (ch.equals("^")) {
 			return 3;
 		}
-		else if (ch == "(")
+		else if (ch.equals("("))
 		{
 			return 4;
 		}
