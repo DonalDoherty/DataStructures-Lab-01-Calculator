@@ -62,16 +62,14 @@ public class CalcEngine
     		{
     			if(token == "(")
     			{
-    				opStack.push(token);
     				for(int j = i+1; tokens[j] == ")" || j<tokens.length; j++)
     				{
     					
     					if(priority(tokens[j]) > 0)
     					{
-    						opStack.push(tokens[j]);
+    						output.push(tokens[j]);
     					}
     				}
-    				opStack.push(")");
     				for(int k = 0; opStack.peek() == "("; k++)
     				{
     					output.push(opStack.pop());
@@ -93,6 +91,8 @@ public class CalcEngine
     		}
     	}
     	output.push(opStack.pop());
+    	System.out.println(opStack.content.toString());
+    	System.out.println(output.content.toString());
     	return null;
     }
     
@@ -160,9 +160,8 @@ public void divide()
      */
     public void clear()
     {
-        displayValue = 0;
-		operand1 = 0;
-
+    	opStack.clear();
+    	output.clear();
     }
 
     /**

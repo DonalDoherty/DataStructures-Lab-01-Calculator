@@ -104,7 +104,7 @@ public class UserInterface
 	{
 		String command = event.getActionCommand();
 
-		if(!command.equals("="))
+		if(!command.equals("=") && !command.equals("C"))
 		{
 			in = in.concat(command);
 		}
@@ -112,6 +112,8 @@ public class UserInterface
 		else if(command.equals("="))
 			calc.postFix(in);
 		else if(command.equals("C"))
+			in = "";
+			command = "";
 			calc.clear();
 
 		redisplay();

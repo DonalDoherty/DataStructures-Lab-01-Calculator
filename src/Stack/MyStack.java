@@ -5,7 +5,7 @@ import java.util.*;
 public class MyStack<E> implements StackInterface< E > {
 	
 	//The ArrayList that will form the basis of the stack
-	private ArrayList<E> content;
+	public ArrayList<E> content;
 	
 	public MyStack()
 	{
@@ -49,5 +49,5 @@ public class MyStack<E> implements StackInterface< E > {
 	public void clear() {
 		content.clear();
 	}
-
+	
 }
