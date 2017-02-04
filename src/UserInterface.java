@@ -20,6 +20,7 @@ public class UserInterface
     private JFrame frame;
 	private JTextField display;
 	private JLabel status;
+	private String in;
 
 	/**
 	 * Create a user interface for a given calcEngine.
@@ -30,6 +31,7 @@ public class UserInterface
 		showingAuthor = true;
 		makeFrame();
 		frame.setVisible(true);
+		in = "";
 	}
 
 	/**
@@ -102,34 +104,15 @@ public class UserInterface
 	{
 		String command = event.getActionCommand();
 
-		if(command.equals("0") ||
-		   command.equals("1") ||
-		   command.equals("2") ||
-		   command.equals("3") ||
-		   command.equals("4") ||
-		   command.equals("5") ||
-		   command.equals("6") ||
-		   command.equals("7") ||
-		   command.equals("8") ||
-		   command.equals("9"))
+		if(!command.equals("="))
 		{
-			int number = Integer.parseInt(command);
-			calc.numberPressed(number);
+			in = in.concat(command);
 		}
-		else if(command.equals("+"))
-			calc.plus();
-		else if(command.equals("-"))
-			calc.minus();
+		
 		else if(command.equals("="))
-			calc.equals();
+			calc.postFix(in);
 		else if(command.equals("C"))
 			calc.clear();
-		else if(command.equals("*"))
-			calc.multiply();
-		else if(command.equals("/"))
-			calc.divide();
-		else if(command.equals("^"))
-			calc.power();
 
 		redisplay();
 	}
@@ -141,6 +124,7 @@ public class UserInterface
 	private void redisplay()
 	{
 		display.setText("" + calc.getDisplayValue());
+		display.setText(in);
 	}
 
 	/**

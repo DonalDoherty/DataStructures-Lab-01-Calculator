@@ -10,7 +10,7 @@ import Stack.MyStack;
 public class CalcEngine
 {
 	MyStack opStack;
-	ArrayList<String> tokens;
+	String[] tokens;
 	MyStack output;
     char operator;
     int displayValue, operand1;
@@ -24,7 +24,6 @@ public class CalcEngine
         operator =' ';
         displayValue=0;
 		operand1 = 0;
-		tokens = new ArrayList<String>();
 		output = new MyStack<String>();
 		opStack = new MyStack<String>();
     }
@@ -48,10 +47,52 @@ public class CalcEngine
     }
     
     //This method converts the infix input to postfix.
-    public void postFix()
+    public String postFix(String in)
     {
-    	
+    	//This line uses a postive lookbehind and lookahead to split the infix string into tokens, allowing for more than 1 didgit numbers
+    	tokens = in.split("(?<=[^\\.a-zA-Z\\d])|(?=[^\\.a-zA-Z\\d])");
+    	for(int i = 0; i<tokens.length; i++)
+    	{
+    		String token = tokens[i];
+    		if(priority(token) == 0)
+    		{
+    			output.push(token);
+    		}
+    		else if(priority(token) > 0)
+    		{
+    			if(token == "(")
+    			{
+    				opStack.push(token);
+    				for(int j = i+1; tokens[j] == ")" || j<tokens.length; j++)
+    				{
+    					
+    					if(priority(tokens[j]) > 0)
+    					{
+    						opStack.push(tokens[j]);
+    					}
+    				}
+    				opStack.push(")");
+    				for(int k = 0; opStack.peek() == "("; k++)
+    				{
+    					output.push(opStack.pop());
+    				}
+					output.push(opStack.pop());	
+    			}
+    			else if(priority(token) > priority((String) opStack.peek()) || opStack.isEmpty() == true )
+    					{
+    					opStack.push(token);
+    					}
+    			else
+    			{
+    				while(opStack.isEmpty() == false)
+    				output.push(opStack.pop());
+    			}
+    		}
+    	}
+    	return null;
     }
+    
+
     /**
      * The 'plus' button was pressed. 
      */
@@ -153,24 +194,31 @@ public void divide()
 	}
 	
 	//Compares Operator to priorities 
-	public int priority(char ch)
+	public int priority(String ch)
 	{
-		if (ch == '+') {
-			return 0;
-		}
-	    else if (ch == '-') {
-			return 0;
-		}
-		else if (ch == '/') {
+		if (ch == "+") {
 			return 1;
 		}
-		else if (ch == '*') {
+	    else if (ch == "-") {
 			return 1;
 		}
-		else if (ch == '^') {
+		else if (ch == "/") {
 			return 2;
 		}
-		return 0;
+		else if (ch == "*") {
+			return 2;
+		}
+		else if (ch == "^") {
+			return 3;
+		}
+		else if (ch == "(")
+		{
+			return 4;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 }
